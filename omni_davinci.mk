@@ -14,8 +14,22 @@
 # limitations under the License.
 #
 
-LOCAL_PATH := $(call my-dir)
+# Release name
+PRODUCT_RELEASE_NAME := davinci
 
-ifneq ($(filter violet,$(TARGET_DEVICE)),)
-include $(call all-makefiles-under,$(LOCAL_PATH))
-endif
+$(call inherit-product, build/target/product/embedded.mk)
+
+# Inherit from our custom product configuration
+$(call inherit-product, vendor/omni/config/common.mk)
+
+PRODUCT_PROPERTY_OVERRIDES += \
+    sys.usb.controller=a600000.dwc3 \
+    sys.usb.rndis.func.name=rndis_bam \
+    sys.usb.rmnet.func.name=rmnet_bam
+
+## Device identifier. This must come after all inclusions
+PRODUCT_DEVICE := davinci
+PRODUCT_NAME := omni_davinci
+PRODUCT_BRAND := Xiaomi
+PRODUCT_MODEL := Redmi K20
+PRODUCT_MANUFACTURER := Xiaomi

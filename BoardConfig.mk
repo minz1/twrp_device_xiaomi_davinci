@@ -25,7 +25,7 @@ TARGET_2ND_ARCH := arm
 TARGET_2ND_ARCH_VARIANT := armv8-a
 TARGET_2ND_CPU_ABI := armeabi-v7a
 TARGET_2ND_CPU_ABI2 := armeabi
-TARGET_2ND_CPU_VARIANT := cortex-a73
+TARGET_2ND_CPU_VARIANT := cortex-a75
 TARGET_USES_64_BIT_BINDER := true
 
 ENABLE_CPUSETS := true
@@ -38,20 +38,21 @@ TARGET_USES_UEFI := true
 
 # Platform
 TARGET_BOARD_PLATFORM := sm6150
-TARGET_BOARD_PLATFORM_GPU := qcom-adreno612
+TARGET_BOARD_PLATFORM_GPU := qcom-adreno618
 
 # Kernel
-BOARD_KERNEL_CMDLINE := androidboot.hardware=qcom androidboot.console=ttyMSM0 androidboot.memcg=1 lpm_levels.sleep_disabled=1 video=vfb:640x400,bpp=32,memsize=3072000 msm_rtb.filter=0x237 service_locator.enable=1 swiotlb=1 androidboot.usbcontroller=a600000.dwc3 earlycon=msm_geni_serial,0x880000 loop.max_part=7 cgroup.memory=nokmem,nosocket androidboot.usbconfigfs=true
-BOARD_KERNEL_BASE := 0x80000000
+BOARD_KERNEL_CMDLINE := androidboot.hardware=qcom androidboot.console=ttyMSM0 androidboot.memcg=1 lpm_levels.sleep_disabled=1 video=vfb:640x400,bpp=32,memsize=3072000 msm_rtb.filter=0x237 service_locator.enable=1 swiotlb=1 androidboot.configfs=true androidboot.usbcontroller=a600000.dwc3 firmware_class.path=/vendor/firmware_mnt/image earlycon=msm_geni_serial,0x880000 loop.max_part=7 cgroup.memory=nokmem,nosocket
+BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
+BOARD_KERNEL_BASE := 0x00000000
 BOARD_KERNEL_PAGESIZE := 4096
 BOARD_KERNEL_TAGS_OFFSET := 0x00000100
-BOARD_RAMDISK_OFFSET     := 0x01000000
+BOARD_RAMDISK_OFFSET     := 0x02000000
 BOARD_KERNEL_IMAGE_NAME := Image.gz-dtb
 TARGET_KERNEL_ARCH := arm64
 TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-linux-android-
 TARGET_KERNEL_HEADER_ARCH := arm64
-TARGET_KERNEL_SOURCE := kernel/xiaomi/sm6150
-TARGET_KERNEL_CONFIG := violet-perf_defconfig
+TARGET_KERNEL_SOURCE := kernel/xiaomi/davinci
+TARGET_KERNEL_CONFIG := vendor/davinci_user_defconfig
 TARGET_KERNEL_CLANG_COMPILE := true
 
 # QCOM
@@ -63,13 +64,15 @@ BOARD_AVB_ROLLBACK_INDEX := $(PLATFORM_SECURITY_PATCH_TIMESTAMP)
 
 # Partitions
 BOARD_FLASH_BLOCK_SIZE := 262144
-BOARD_BOOTIMAGE_PARTITION_SIZE := 67108864
+BOARD_DTBOIMG_PARTITION_SIZE := 33554432
+BOARD_BOOTIMAGE_PARTITION_SIZE := 134217728
 BOARD_CACHEIMAGE_PARTITION_SIZE := 268435456
+BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := ext4
 BOARD_RECOVERYIMAGE_PARTITION_SIZE := 67108864
 BOARD_SYSTEMIMAGE_PARTITION_SIZE := 3221225472
-BOARD_USERDATAIMAGE_PARTITION_SIZE := 55155080704
+BOARD_USERDATAIMAGE_PARTITION_SIZE := 57453555712
 BOARD_USERDATAIMAGE_FILE_SYSTEM_TYPE := ext4
-BOARD_VENDORIMAGE_PARTITION_SIZE := 2147483648
+BOARD_VENDORIMAGE_PARTITION_SIZE := 1073741824
 
 # System as root
 BOARD_BUILD_SYSTEM_ROOT_IMAGE := true
@@ -78,7 +81,6 @@ BOARD_SUPPRESS_SECURE_ERASE := true
 
 # File systems
 TARGET_USERIMAGES_USE_EXT4 := true
-TARGET_USERIMAGES_USE_F2FS := true
 
 # Workaround for error copying vendor files to recovery ramdisk
 BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
