@@ -14,18 +14,8 @@
 # limitations under the License.
 #
 
-# Release name
-PRODUCT_RELEASE_NAME := violet
+LOCAL_PATH := $(call my-dir)
 
-$(call inherit-product, build/target/product/embedded.mk)
-
-# Inherit from our custom product configuration
-$(call inherit-product, vendor/lineage/config/common_full_phone.mk)
-
-## Device identifier. This must come after all inclusions
-PRODUCT_DEVICE := violet
-PRODUCT_NAME := lineage_violet
-PRODUCT_BRAND := Xiaomi
-PRODUCT_MODEL := Xiaomi Redmi Note 7 Pro
-PRODUCT_MANUFACTURER := Xiaomi
-
+ifneq ($(filter davinci,$(TARGET_DEVICE)),)
+include $(call all-makefiles-under,$(LOCAL_PATH))
+endif
